@@ -22,6 +22,7 @@
     # # "Hello, world!" when run.
     tmux
     oh-my-zsh
+    lazygit
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -77,7 +78,9 @@
     shellAliases = {
       ll = "ls -l";
       ".." = "cd ..";
-    };
+      "homeup" = "home-manager switch -f home.nix";
+      "homere" = "systemctl --user reset-failed";
+     };
     zplug = {
       enable = true;
       plugins = [
@@ -90,8 +93,6 @@
       theme = "robbyrussell";
     };
   };
-
-  
 
   programs.tmux = {
     enable = true;
@@ -121,5 +122,19 @@
       bind % split-window -h -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
     '';
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "Maruf Shafique";
+    userEmail = "maruf.shafique@welldev.io";
+  };
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      font.size = 16;
+      shell.program = "${pkgs.zsh}/bin/zsh";
+    };
   };
 }
