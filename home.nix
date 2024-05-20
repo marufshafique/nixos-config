@@ -23,6 +23,21 @@
     tmux
     oh-my-zsh
     lazygit
+    helix
+    git
+
+    wget
+    curl
+
+    zig
+    rustup
+    zls
+    nil
+    nodejs
+    nodePackages.yarn
+    nodePackages.vls
+    nodePackages.typescript-language-server
+    nodePackages.typescript
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
