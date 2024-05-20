@@ -30,12 +30,20 @@
     curl
 
     zig
-    rustup
     zls
     nil
+
+    cmake
+
+    # run the "rustup component add rust-analyzer" to see
+    # Autocompletion in helix
+    rustup
+    
     nodejs
-    nodePackages.yarn
+    yarn-berry
+    esbuild
     nodePackages.vls
+    nodePackages.vue-language-server
     nodePackages.typescript-language-server
     nodePackages.typescript
 
@@ -150,6 +158,29 @@
     settings = {
       font.size = 16;
       shell.program = "${pkgs.zsh}/bin/zsh";
+    };
+  };
+
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "dark_plus";
+      editor = {
+        line-number = "relative";
+        mouse = true;
+        lsp.display-messages = true;
+      };
+      editor.cursor-shape = {
+        insert = "bar";
+        normal = "block";
+        select = "underline";
+      };
+    };
+    languages = {
+      language = [
+        { name = "rust"; auto-format = false; }
+        { name = "zig"; auto-format = true; }
+      ];
     };
   };
 }
