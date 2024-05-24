@@ -63,7 +63,6 @@
 
   # Enable sound with pipewire.
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -117,7 +116,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -134,9 +133,25 @@
   system.stateVersion = "23.11"; # Did you read the comment?
 
 
+  nixpkgs.config.allowUnfree = true;
+  services.blueman = {
+    enable = true;
+  };
+  hardware.pulseaudio.enable = false;
+  hardware.enableAllFirmware = true;
   hardware.bluetooth = {
-    enable =true;
-    powerOnBoot = true;
+    enable = true;
+    settings = {
+      General = {
+        Name = "Hello";
+        ControllerMode = "dual";
+        FastConnectable = "true";
+        Experimental = "true";
+      };
+      Policy = {
+        AutoEnable = "true";
+      };
+    };
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

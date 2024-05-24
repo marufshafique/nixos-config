@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ./home/alacritty.nix
+    ./home/helix.nix
+    ./home/zsh.nix
+    ./home/tmux.nix
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "marufs";
@@ -39,8 +45,10 @@
     # Autocompletion in helix
     rustup
     
-    nodejs
-    yarn-berry
+    bun
+    nodejs_18
+    yarn
+    yarn2nix
     esbuild
     nodePackages.vls
     nodePackages.vue-language-server
@@ -94,93 +102,9 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    shellAliases = {
-      ll = "ls -l";
-      ".." = "cd ..";
-      "homeup" = "home-manager switch -f home.nix";
-      "homere" = "systemctl --user reset-failed";
-     };
-    zplug = {
-      enable = true;
-      plugins = [
-        { name = "zsh-users/zsh-autosuggestions"; }
-      ];
-    };
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" ];
-      theme = "robbyrussell";
-    };
-  };
-
-  programs.tmux = {
-    enable = true;
-    prefix = "C-Space";
-    mouse = true;
-    baseIndex = 1;
-    terminal = "tmux-256color";
-    shell = "${pkgs.zsh}/bin/zsh";
-    plugins = [
-      pkgs.tmuxPlugins.vim-tmux-navigator
-      pkgs.tmuxPlugins.sensible
-      pkgs.tmuxPlugins.weather
-      pkgs.tmuxPlugins.cpu
-      {
-        plugin = pkgs.tmuxPlugins.dracula;
-        extraConfig = ''
-          set -g @dracula-show-left-icon session
-          set -g @dracula-plugins "weather, ram-usage"
-          set -g @dracula-show-fahrenheit false
-          set -g @dracula-fixed-location "Dhaka"
-          set -g status-position top
-        '';
-      }
-    ];
-    extraConfig = ''
-      bind '"' split-window -c "#{pane_current_path}"
-      bind % split-window -h -c "#{pane_current_path}"
-      bind c new-window -c "#{pane_current_path}"
-    '';
-  };
-
   programs.git = {
     enable = true;
     userName = "Maruf Shafique";
     userEmail = "maruf.shafique@welldev.io";
-  };
-
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      font.size = 16;
-      shell.program = "${pkgs.zsh}/bin/zsh";
-    };
-  };
-
-  programs.helix = {
-    enable = true;
-    settings = {
-      theme = "dark_plus";
-      editor = {
-        line-number = "relative";
-        mouse = true;
-        lsp.display-messages = true;
-      };
-      editor.cursor-shape = {
-        insert = "bar";
-        normal = "block";
-        select = "underline";
-      };
-    };
-    languages = {
-      language = [
-        { name = "rust"; auto-format = false; }
-        { name = "zig"; auto-format = true; }
-      ];
-    };
   };
 }
